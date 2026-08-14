@@ -5,20 +5,36 @@ export interface KeyMap {
 
 export const navigateKeys: KeyMap[] = [
   {
-    key: "←/h",
+    key: "h",
     label: "left",
   },
   {
-    key: "↓/j",
+    key: "j",
     label: "down",
   },
   {
-    key: "↑/k",
+    key: "k",
     label: "up",
   },
   {
-    key: "→/l",
+    key: "l",
     label: "right",
+  },
+  {
+    key: "w",
+    label: "jump forward",
+  },
+  {
+    key: "b",
+    label: "jump backward",
+  },
+  {
+    key: "<C-d>",
+    label: "scroll down",
+  },
+  {
+    key: "<C-u>",
+    label: "scroll up",
   },
   {
     key: "0",

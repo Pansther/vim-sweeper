@@ -5,6 +5,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+
 import { actionKeys, navigateKeys, type KeyMap } from "./config";
 
 const Instruction = () => {
@@ -28,7 +29,7 @@ const Keys = ({ keys }: { keys: KeyMap[] }) => {
     <ul>
       {keys.map(({ key, label }) => (
         <li key={key} className="flex">
-          <div className="w-20">{key}</div>
+          <div className="w-24">{key}</div>
           <div>{label}</div>
         </li>
       ))}
