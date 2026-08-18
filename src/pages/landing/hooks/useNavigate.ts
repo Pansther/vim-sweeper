@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 
 import useGameContext from "../components/context";
@@ -22,10 +23,32 @@ const {
   Backward,
 } = AvailableNavigateKey;
 
+const keys = Array.from({ length: 10 }, (_, i) => `${i}`);
+const navigateKeys = [
+  {
+    key: "h",
+    act: Left,
+  },
+  {
+    key: "j",
+    act: Down,
+  },
+  {
+    key: "k",
+    act: Up,
+  },
+  {
+    key: "l",
+    act: Right,
+  },
+];
+
 const useNavigate = () => {
+  const digitKeyRef = useRef("");
   const [{ restart }, setGame] = useGameContext();
 
-  const navigate = (key: AvailableNavigateKey) => {
+  const navigate = (key: AvailableNavigateKey, num = 1) => {
+    digitKeyRef.current = "";
     setGame((s) => {
       const isPlay = s.playState === Idle || s.playState === Play;
 
@@ -33,26 +56,28 @@ const useNavigate = () => {
 
       switch (key) {
         case Up:
+          s.selectedIndex.row -= num;
           if (s.selectedIndex.row <= 0) {
-            s.selectedIndex.row = s.playRows[0].length - 1;
-          } else {
-            s.selectedIndex.row -= 1;
+            s.selectedIndex.row = 0;
           }
           break;
         case Down:
-          s.selectedIndex.row += 1;
-          s.selectedIndex.row %= s.playRows[0].length;
+          s.selectedIndex.row += num;
+          if (s.selectedIndex.row > s.playRows[0].length - 1) {
+            s.selectedIndex.row = s.playRows[0].length - 1;
+          }
           break;
         case Left:
+          s.selectedIndex.col -= num;
           if (s.selectedIndex.col <= 0) {
-            s.selectedIndex.col = s.playRows[1].length - 1;
-          } else {
-            s.selectedIndex.col -= 1;
+            s.selectedIndex.col = 0;
           }
           break;
         case Right:
-          s.selectedIndex.col += 1;
-          s.selectedIndex.col %= s.playRows[1].length;
+          s.selectedIndex.col += num;
+          if (s.selectedIndex.col >= s.playRows[1].length - 1) {
+            s.selectedIndex.col = s.playRows[1].length - 1;
+          }
           break;
         case Top:
           s.selectedIndex.row = 0;
@@ -84,6 +109,7 @@ const useNavigate = () => {
             s.selectedIndex.row = 0;
           }
           break;
+        // TODO: Fix motion
         case Forward: {
           let isFound = false;
           let row = s.selectedIndex.row;
@@ -148,20 +174,58 @@ const useNavigate = () => {
     });
   };
 
-  useHotkeys("j", () => navigate(Down));
-  useHotkeys("k", () => navigate(Up));
-  useHotkeys("h", () => navigate(Left));
-  useHotkeys("l", () => navigate(Right));
+  // useHotkeys("j", () => navigate(Down));
+  // useHotkeys("k", () => navigate(Up));
+  // useHotkeys("h", () => navigate(Left));
+  // useHotkeys("l", () => navigate(Right));
   useHotkeys("w", () => navigate(Forward));
   useHotkeys("b", () => navigate(Backward));
   useHotkeys("g", () => navigate(Top));
   useHotkeys("shift+g", () => navigate(Bottom));
-  useHotkeys("0", () => navigate(Start));
+  // useHotkeys("0", () => navigate(Start));
   useHotkeys("shift+4", () => navigate(End));
   useHotkeys("shift+m", () => navigate(Middle));
   useHotkeys("ctrl+d", () => navigate(ScrollDown));
   useHotkeys("ctrl+u", () => navigate(ScrollUp));
   useHotkeys("r", restart);
+
+  useEffect(() => {
+    const listenNavigateKey = (event: KeyboardEvent) => {
+      const key = event.key;
+      const isDigit = keys?.includes(key);
+      const isNavigate = navigateKeys.map(({ key }) => key)?.includes(key);
+
+      if (key === "Escape") {
+        digitKeyRef.current = "";
+      }
+
+      if (key === "0" && !digitKeyRef.current) {
+        return navigate(Start);
+      }
+
+      if (!isDigit && !isNavigate) return;
+
+      if (isDigit) {
+        digitKeyRef.current += key;
+        digitKeyRef.current = digitKeyRef.current.slice(0, 3);
+      }
+
+      if (isNavigate) {
+        const num = +digitKeyRef.current || 1;
+        const navigateKey = navigateKeys.find(
+          (navigate) => navigate.key === key,
+        );
+
+        navigate(navigateKey!.act, num);
+      }
+    };
+
+    document.addEventListener("keydown", listenNavigateKey);
+
+    return () => {
+      document.removeEventListener("keydown", listenNavigateKey);
+    };
+  }, []);
 };
 
 export default useNavigate;
