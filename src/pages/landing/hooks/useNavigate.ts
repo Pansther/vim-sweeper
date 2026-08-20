@@ -96,20 +96,19 @@ const useNavigate = () => {
           s.selectedIndex.col = Math.floor(s.playRows.length / 2);
           break;
         case ScrollDown:
-          s.selectedIndex.row += 4;
+          s.selectedIndex.row += Math.floor((s.playRows[0].length / 4) * num);
 
           if (s.selectedIndex.row >= s.playRows[0].length) {
             s.selectedIndex.row = s.playRows.length - 1;
           }
           break;
         case ScrollUp:
-          s.selectedIndex.row -= 4;
+          s.selectedIndex.row -= Math.floor((s.playRows[0].length / 4) * num);
 
           if (s.selectedIndex.row <= 0) {
             s.selectedIndex.row = 0;
           }
           break;
-        // TODO: Fix motion
         case Forward: {
           let isFound = false;
           let row = s.selectedIndex.row;
@@ -187,6 +186,8 @@ const useNavigate = () => {
   useHotkeys("shift+m", () => navigate(Middle));
   useHotkeys("ctrl+d", () => navigate(ScrollDown));
   useHotkeys("ctrl+u", () => navigate(ScrollUp));
+  useHotkeys("ctrl+f", () => navigate(ScrollDown, 2));
+  useHotkeys("ctrl+b", () => navigate(ScrollUp, 2));
   useHotkeys("r", restart);
 
   useEffect(() => {

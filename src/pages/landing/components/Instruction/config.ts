@@ -1,6 +1,7 @@
 export interface KeyMap {
   key: string;
   label: string;
+  isOptional?: boolean;
 }
 
 export const navigateKeys: KeyMap[] = [
@@ -21,6 +22,10 @@ export const navigateKeys: KeyMap[] = [
     label: "right",
   },
   {
+    key: "1-9",
+    label: "digit for motion",
+  },
+  {
     key: "w",
     label: "jump forward",
   },
@@ -31,10 +36,22 @@ export const navigateKeys: KeyMap[] = [
   {
     key: "<C-d>",
     label: "scroll down",
+    isOptional: true,
   },
   {
     key: "<C-u>",
     label: "scroll up",
+    isOptional: true,
+  },
+  {
+    key: "<C-f>",
+    label: "screen down",
+    isOptional: true,
+  },
+  {
+    key: "<C-b>",
+    label: "screen up",
+    isOptional: true,
   },
   {
     key: "0",

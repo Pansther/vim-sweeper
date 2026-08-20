@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 import {
   Collapsible,
   CollapsibleContent,
@@ -9,13 +11,19 @@ import {
 import { actionKeys, navigateKeys, type KeyMap } from "./config";
 
 const Instruction = () => {
+  const [isShowOptional, setShowOptional] = useState(false);
+
   return (
     <div className="h-full">
-      <Collapsible>
-        <CollapsibleTrigger>Open</CollapsibleTrigger>
+      <Collapsible defaultOpen>
+        <CollapsibleTrigger>Toggle Instruction</CollapsibleTrigger>
         <CollapsibleContent className="w-90 flex flex-col gap-4 p-5">
-          <Keys keys={navigateKeys} />
-          <Keys keys={actionKeys} />
+          <Keys keys={navigateKeys} isShowOptional={isShowOptional} />
+          <Keys keys={actionKeys} isShowOptional={isShowOptional} />
+
+          <button onClick={() => setShowOptional((prev) => !prev)}>
+            {isShowOptional ? "Hide Optional" : "Show Optional"}
+          </button>
         </CollapsibleContent>
       </Collapsible>
     </div>
@@ -24,15 +32,23 @@ const Instruction = () => {
 
 export default Instruction;
 
-const Keys = ({ keys }: { keys: KeyMap[] }) => {
+const Keys = ({
+  keys,
+  isShowOptional = false,
+}: {
+  keys: KeyMap[];
+  isShowOptional?: boolean;
+}) => {
   return (
     <ul>
-      {keys.map(({ key, label }) => (
-        <li key={key} className="flex">
-          <div className="w-24">{key}</div>
-          <div>{label}</div>
-        </li>
-      ))}
+      {keys
+        .filter(({ isOptional }) => (isShowOptional ? true : !isOptional))
+        .map(({ key, label }) => (
+          <li key={key} className="flex">
+            <div className="w-24">{key}</div>
+            <div>{label}</div>
+          </li>
+        ))}
     </ul>
   );
 };

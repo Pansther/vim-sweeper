@@ -1,4 +1,5 @@
 import Col from "./Col";
+import KeyStroke from "../KeyStroke";
 import RelativeCol from "./RelativeCol";
 
 import useGameContext from "../context";
@@ -33,6 +34,10 @@ const Game = () => {
             ))}
           </div>
         </div>
+      </div>
+
+      <div className="col-span-12">
+        <KeyStroke />
       </div>
     </div>
   );
