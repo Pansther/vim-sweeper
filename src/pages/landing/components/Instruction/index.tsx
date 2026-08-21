@@ -14,10 +14,10 @@ const Instruction = () => {
   const [isShowOptional, setShowOptional] = useState(false);
 
   return (
-    <div className="h-full">
+    <div>
       <Collapsible defaultOpen>
         <CollapsibleTrigger>Toggle Instruction</CollapsibleTrigger>
-        <CollapsibleContent className="w-90 flex flex-col gap-4 p-5">
+        <CollapsibleContent className="w-90 flex flex-col gap-4 p-5 max-h-[80vh] overflow-auto">
           <Keys keys={navigateKeys} isShowOptional={isShowOptional} />
           <Keys keys={actionKeys} isShowOptional={isShowOptional} />
 

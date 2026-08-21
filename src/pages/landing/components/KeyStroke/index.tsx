@@ -48,9 +48,10 @@ const KeyStroke = () => {
   }, []);
 
   return (
-    <div className="flex w-full justify-center flex-col items-center">
-      <div>{keys}</div>
-      <ul className="min-w-64 max-h-32 overflow-auto">
+    <div className="flex min-w-72 flex-col items-center">
+      <div>Keystroke</div>
+      <ul className="max-h-[80vh] overflow-auto p-5">
+        <li className="text-center">{keys}</li>
         {historyKeys.map((key, i) => (
           <li key={`${key}_${i}`} className="text-center">
             {key}

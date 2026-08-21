@@ -1,18 +1,32 @@
 import Col from "./Col";
-import KeyStroke from "../KeyStroke";
 import RelativeCol from "./RelativeCol";
 
 import useGameContext from "../context";
 import useNavigate from "../../hooks/useNavigate";
 import useInteract from "../../hooks/useInteract";
 
-import type { ItemType } from "./type";
+import { countMinesAmount } from "./helper";
+
+import { GameState, type ItemType } from "./type";
 
 const Game = () => {
-  const [{ playRows }] = useGameContext();
+  const [{ playRows, playState, mines }] = useGameContext();
+
+  const remaining = countMinesAmount(playRows, mines);
 
   useNavigate();
   useInteract();
+
+  const renderHelper = () => {
+    switch (playState) {
+      case GameState.Idle:
+        return "Press 'x' to start.";
+      case GameState.Play:
+        return `Remaining: ${remaining}`;
+      default:
+        return "Press 'r' to restart.";
+    }
+  };
 
   return (
     <div className="grid grid-cols-12">
@@ -37,7 +51,7 @@ const Game = () => {
       </div>
 
       <div className="col-span-12">
-        <KeyStroke />
+        <div className="flex justify-center">{renderHelper()}</div>
       </div>
     </div>
   );
