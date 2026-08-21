@@ -2,31 +2,23 @@
 
 import { useState } from "react";
 
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-
 import { actionKeys, navigateKeys, type KeyMap } from "./config";
 
 const Instruction = () => {
   const [isShowOptional, setShowOptional] = useState(false);
 
   return (
-    <div>
-      <Collapsible defaultOpen>
-        <CollapsibleTrigger>Toggle Instruction</CollapsibleTrigger>
-        <CollapsibleContent className="w-90 flex flex-col gap-4 p-5 max-h-[80vh] overflow-auto">
-          <Keys keys={navigateKeys} isShowOptional={isShowOptional} />
-          <Keys keys={actionKeys} isShowOptional={isShowOptional} />
+    <aside>
+      <h2>Toggle Instruction</h2>
+      <div className="w-90 flex flex-col gap-4 p-5 max-h-[70vh] overflow-auto">
+        <Keys keys={navigateKeys} isShowOptional={isShowOptional} />
+        <Keys keys={actionKeys} isShowOptional={isShowOptional} />
 
-          <button onClick={() => setShowOptional((prev) => !prev)}>
-            {isShowOptional ? "Hide Optional" : "Show Optional"}
-          </button>
-        </CollapsibleContent>
-      </Collapsible>
-    </div>
+        <button onClick={() => setShowOptional((prev) => !prev)}>
+          {isShowOptional ? "Hide Optional" : "Show Optional"}
+        </button>
+      </div>
+    </aside>
   );
 };
 
