@@ -1,3 +1,5 @@
+import { ToastContainer, toast } from "react-toastify";
+
 import Col from "./Col";
 import RelativeCol from "./RelativeCol";
 
@@ -34,7 +36,11 @@ const Game = () => {
         <div className="flex flex-col w-full p-1">
           <div className="flex w-full h-full items-center justify-center flex-col">
             {playRows.map((rows, rowIndex) => (
-              <div key={rowIndex} className="flex relative">
+              <div
+                key={rowIndex}
+                className="flex relative"
+                onClick={() => toast("Oops! Keyboard Only", { type: "info" })}
+              >
                 <RelativeCol rowIndex={rowIndex} />
                 {rows.map((col, colIndex) => (
                   <Col
@@ -53,6 +59,8 @@ const Game = () => {
       <div className="col-span-12">
         <div className="flex justify-center">{renderHelper()}</div>
       </div>
+
+      <ToastContainer />
     </div>
   );
 };

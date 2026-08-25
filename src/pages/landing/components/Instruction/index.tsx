@@ -8,9 +8,9 @@ const Instruction = () => {
   const [isShowOptional, setShowOptional] = useState(false);
 
   return (
-    <aside>
-      <h2>Toggle Instruction</h2>
-      <div className="w-90 flex flex-col gap-4 p-5 max-h-[70vh] overflow-auto">
+    <aside className="min-w-72">
+      <h2>Instruction</h2>
+      <div className="flex flex-col gap-4 p-5 max-h-[70vh] overflow-auto">
         <Keys keys={navigateKeys} isShowOptional={isShowOptional} />
         <Keys keys={actionKeys} isShowOptional={isShowOptional} />
 

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const REGEX = /(^[a-zA-Z0-9$]$)|(^Escape|Control)/;
+const REGEX = /(^[a-zA-Z0-9$\ ]$)|(^Escape|Control|Space)/;
 
 const KeyStroke = () => {
   const timeoutRef = useRef<number>(undefined);
@@ -10,9 +10,11 @@ const KeyStroke = () => {
 
   useEffect(() => {
     const listenNavigateKey = (event: KeyboardEvent) => {
-      const key = event.key;
+      let key = event.key;
 
       if (!REGEX.test(key)) return;
+
+      if (key === " ") key = "Space";
 
       if (key === "r" || key === "R") {
         setKeys("");
@@ -51,6 +53,9 @@ const KeyStroke = () => {
     <aside className="flex min-w-72 flex-col items-center">
       <div>Keystroke</div>
       <ul className="max-h-[70vh] overflow-auto p-5">
+        {!keys?.length && !historyKeys?.length && (
+          <li className="text-center">Press any key.</li>
+        )}
         <li className="text-center">{keys}</li>
         {historyKeys.map((key, i) => (
           <li key={`${key}_${i}`} className="text-center">

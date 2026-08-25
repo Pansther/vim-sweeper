@@ -89,7 +89,17 @@ export const actionKeys: KeyMap[] = [
     label: "open",
   },
   {
+    key: "space",
+    label: "open",
+    isOptional: true,
+  },
+  {
     key: "m",
     label: "flag",
+  },
+  {
+    key: "f",
+    label: "flag",
+    isOptional: true,
   },
 ];
