@@ -8,21 +8,24 @@ import { GameContextProvider } from "./components/context";
 
 const App = () => {
   return (
-    <div className="flex flex-col gap-12">
-      <section className="flex my-2">
-        <Instruction />
-
-        <div className="flex flex-col w-full h-full">
+    <div className="mx-auto flex min-h-screen w-full flex-col px-4 py-5 sm:px-6 lg:px-4 lg:py-4">
+      <div className="overflow-hidden rounded-2xl border bg-card shadow-2xl shadow-crust/25">
+        <GameContextProvider>
           <HeroBanner />
-          <GameContextProvider>
-            <main>
-              <Game />
-            </main>
-          </GameContextProvider>
-        </div>
 
-        <KeyStroke />
-      </section>
+          <section className="grid lg:grid-cols-[minmax(13rem,17rem)_minmax(0,1fr)_minmax(13rem,17rem)]">
+            <Instruction />
+
+          <div className="min-w-0 bg-base/70 px-3 py-8 sm:px-6 lg:py-12">
+              <main>
+                <Game />
+              </main>
+            </div>
+
+            <KeyStroke />
+          </section>
+        </GameContextProvider>
+      </div>
 
       <Description />
 

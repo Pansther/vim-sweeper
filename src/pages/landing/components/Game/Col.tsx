@@ -41,7 +41,17 @@ const Col = ({ col, rowIndex, colIndex }: ColProps) => {
 
   const isShowAdjacent = isSelectedOpen && playState === Play && isAdjacent;
 
-  const { close, hint, dangers, flag, mine, open, selected, adjacent } = THEME;
+  const {
+    close,
+    hint,
+    dangers,
+    flag,
+    mine,
+    open,
+    selected,
+    adjacent,
+    contrast,
+  } = THEME;
 
   const backgroundColor = cx({
     [close]: !isSelected || !isPlay,
@@ -55,19 +65,19 @@ const Col = ({ col, rowIndex, colIndex }: ColProps) => {
     ?.split(" ")
     ?.at(-1);
 
-  const color = cx("black", {
+  const color = cx(contrast, {
     [dangers?.[amount - 1]]: isOpen,
-    black: isSelected || isHint,
+    [contrast]: isSelected || isHint,
   })
     ?.split(" ")
     ?.at(-1);
 
   return (
     <div
-      className="px-1 flex w-8 h-8 items-center justify-center"
+      className="flex size-8 items-center justify-center px-1 font-mono ring-[0.5px] ring-inset ring-crust/20 transition-colors duration-75 motion-reduce:transition-none"
       style={{ backgroundColor }}
     >
-      <p className="font-bold" style={{ color }}>
+      <p className="font-bold leading-none" style={{ color }}>
         {isOpen && amount && !isMine
           ? amount
           : isFlag

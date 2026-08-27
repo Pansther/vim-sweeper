@@ -14,7 +14,7 @@ const RelativeCol = ({ rowIndex }: RelativeColProps) => {
   return (
     <div
       style={{ color: THEME.selected }}
-      className={cx("absolute w-8 -left-12 opacity-50 text-right", {
+      className={cx("absolute -left-12 w-8 text-right font-mono text-base opacity-60", {
         ["font-bold opacity-100"]: rowIndex === selectedIndex.row,
       })}
     >

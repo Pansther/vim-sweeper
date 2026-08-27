@@ -31,10 +31,10 @@ const Game = () => {
   };
 
   return (
-    <div className="grid grid-cols-12">
-      <div className="col-span-12 flex items-center justify-center">
-        <div className="flex flex-col w-full p-1">
-          <div className="flex w-full h-full items-center justify-center flex-col">
+    <div className="grid grid-cols-12 gap-5">
+      <div className="col-span-12 overflow-x-auto py-1">
+        <div className="mx-auto flex w-max min-w-max flex-col px-12">
+          <div className="flex flex-col items-center justify-center rounded-md border border-surface-1 shadow-lg shadow-crust/35">
             {playRows.map((rows, rowIndex) => (
               <div
                 key={rowIndex}
@@ -57,10 +57,14 @@ const Game = () => {
       </div>
 
       <div className="col-span-12">
-        <div className="flex justify-center">{renderHelper()}</div>
+        <div className="flex justify-center font-mono text-base text-muted-foreground">
+          <span className="rounded-full border border-border bg-card px-3 py-1.5">
+            {renderHelper()}
+          </span>
+        </div>
       </div>
 
-      <ToastContainer />
+      <ToastContainer position="bottom-center" theme="dark" autoClose={1800} />
     </div>
   );
 };

@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import useGameContext from "../context";
+import { GameState } from "../Game/type";
 
 const REGEX = /(^[a-zA-Z0-9$\ ]$)|(^Escape|Control|Space)/;
 
@@ -8,19 +10,22 @@ const KeyStroke = () => {
   const [keys, setKeys] = useState("");
   const [historyKeys, setHistoryKeys] = useState<string[]>([]);
 
+  const [{ playState }] = useGameContext();
+
   useEffect(() => {
+    if (playState === GameState.Idle) {
+      setKeys("");
+      setHistoryKeys([]);
+    }
+
+    if (playState !== GameState.Play) return;
+
     const listenNavigateKey = (event: KeyboardEvent) => {
       let key = event.key;
 
       if (!REGEX.test(key)) return;
 
       if (key === " ") key = "Space";
-
-      if (key === "r" || key === "R") {
-        setKeys("");
-        setHistoryKeys([]);
-        return;
-      }
 
       clearTimeout(timeoutRef.current);
 
@@ -47,21 +52,35 @@ const KeyStroke = () => {
       clearTimeout(timeoutRef.current);
       document.removeEventListener("keydown", listenNavigateKey);
     };
-  }, []);
+  }, [playState]);
 
   return (
-    <aside className="flex min-w-72 flex-col items-center">
-      <div>Keystroke</div>
-      <ul className="max-h-[70vh] overflow-auto p-5">
-        {!keys?.length && !historyKeys?.length && (
-          <li className="text-center">Press any key.</li>
+    <aside className="flex flex-col border-t bg-card lg:border-t-0 lg:border-l">
+      <h2 className="border-b px-5 py-3 font-mono text-sm uppercase tracking-[0.16em] text-muted-foreground">
+        Keystroke
+      </h2>
+      <ul
+        className="max-h-64 min-h-40 overflow-auto p-5 font-mono text-base lg:max-h-[70vh]"
+        aria-live="polite"
+      >
+        {playState === GameState.Idle && (
+          <li className="text-center text-muted-foreground">Press any key.</li>
         )}
-        <li className="text-center">{keys}</li>
-        {historyKeys.map((key, i) => (
-          <li key={`${key}_${i}`} className="text-center">
-            {key}
+        {keys?.length > 0 && (
+          <li className="text-center font-semibold text-primary border-b border-border/60 py-2 last:border-0">
+            {keys}
           </li>
-        ))}
+        )}
+        {historyKeys
+          ?.filter((key) => key?.length > 0)
+          ?.map((key, i) => (
+            <li
+              key={`${key}_${i}`}
+              className="border-b border-border/60 py-2 text-center text-muted-foreground last:border-0"
+            >
+              {key}
+            </li>
+          ))}
       </ul>
     </aside>
   );
