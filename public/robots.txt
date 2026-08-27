@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://wwdev-vim-sweeper.vercel.app/sitemap.xml

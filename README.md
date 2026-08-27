@@ -1,79 +1,65 @@
-# React + TypeScript + Vite
+# Vim Sweeper
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p align="center">
+  <img src="public/og.png" alt="Vim Sweeper preview" width="900" />
+</p>
 
-Currently, two official plugins are available:
+Vim Sweeper is a keyboard-only Minesweeper game for practicing Vim motions and building muscle memory while you play.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Play it here: [wwdev-vim-sweeper.vercel.app](https://wwdev-vim-sweeper.vercel.app/)
 
-## React Compiler
+## How to play
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+Move around the board with familiar Vim motions:
 
-Note: This will impact Vite dev & build performances.
+| Key                 | Action                     |
+| ------------------- | -------------------------- |
+| `h` `j` `k` `l`     | Move left, down, up, right |
+| `w` / `b`           | Jump forward / backward    |
+| `0` / `$`           | Start / end of the line    |
+| `g` / `G` / `M`     | Top / bottom / middle      |
+| `Ctrl-d` / `Ctrl-u` | Scroll down / up           |
+| `Ctrl-f` / `Ctrl-b` | Scroll a screen down / up  |
+| `x` / `Space`       | Open a cell                |
+| `m` / `f`           | Flag a cell                |
+| `Backspace`         | Show a hint                |
+| `r`                 | Restart the game           |
 
-## Expanding the ESLint configuration
+You can prefix movement keys with a number, just like in Vim. For example, `5j` moves down five rows.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Getting started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Requirements: Node.js and Yarn.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+yarn
+yarn dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The development server will print a local URL to open in your browser.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Other commands:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+yarn build    # Create a production build
+yarn preview  # Preview the production build locally
+yarn lint     # Run ESLint
 ```
-# vim-sweeper
-# vim-sweeper
+
+## Built with
+
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS
+- React Hotkeys Hook
+
+## Related projects
+
+- [minesweeper-tui](https://github.com/Pansther/minesweeper-tui) — terminal version of Minesweeper.
+- [minesweeper.nvim](https://github.com/Pansther/minesweeper.nvim) — Minesweeper inside Neovim.
+- [minesweeper-svelte](https://github.com/Pansther/minesweeper-svelte) — Minesweeper Svelte.
+
+## Credits
+
+The core game feature was built by me. The visual style and UI polish were created with Codex.
